@@ -6,6 +6,7 @@ import LayerGroup from 'ol/layer/Group';
 import BingMaps from 'ol/source/BingMaps';
 import XYZ from 'ol/source/XYZ';
 import TileDebug from 'ol/source/TileDebug';
+import TileArcGis from 'ol/source/TileArcGISRest';
 
 const map = new Map({
   target: 'map',
@@ -25,7 +26,7 @@ const layerGroup = new LayerGroup({
         url: 'https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
       }),
       zIndex:0,
-      visible:false,
+      visible:true,
       //extent:[7635755.91449602,900802.0793604623,10976074.022725366, 4241120.187589807]
     }),
 
@@ -37,6 +38,7 @@ const layerGroup = new LayerGroup({
         visible:false
       })
     }),
+
     //CartoDb layer
     //https://github.com/CartoDB/basemap-styles
     new TileLayer({
@@ -46,15 +48,25 @@ const layerGroup = new LayerGroup({
       }),
       visible:false
     }),
+
     //Tile debug layer for grids
     new TileLayer({
       source:new TileDebug(),
       visible:false
     }),
+
     //Stamen Maps
     new TileLayer({
       source:new XYZ({
         url:'https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg'
+      }),
+      visible:false
+    }),
+
+    //ArcGig Image tile
+    new TileLayer({
+      source:new TileArcGis({
+        url:'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer'
       })
     })
 
