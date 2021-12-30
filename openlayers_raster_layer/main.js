@@ -7,6 +7,7 @@ import BingMaps from 'ol/source/BingMaps';
 import XYZ from 'ol/source/XYZ';
 import TileDebug from 'ol/source/TileDebug';
 import TileArcGis from 'ol/source/TileArcGISRest';
+import TileWms from 'ol/source/TileWMS';
 
 const map = new Map({
   target: 'map',
@@ -64,11 +65,29 @@ const layerGroup = new LayerGroup({
     }),
 
     //ArcGig Image tile
+    //Esri arc gis
     new TileLayer({
       source:new TileArcGis({
         url:'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer'
+      }),
+      visible:false
+    }),
+
+    //TileWMSLayer
+    //Open geospatial consortium - web map services
+    new TileLayer({
+      source: new TileWms({
+        //https://nowcoast.noaa.gov/
+        url:'https://nowcoast.noaa.gov/arcgis/services/nowcoast/analysis_meteohydro_sfc_qpe_time/MapServer/WMSServer',
+        params:{
+          //Imagery name identifier
+          LAYERS:1,
+          FORMAT:'image/png',
+          TRANSPARENT:true
+        }
       })
     })
+
 
   ]
 })
