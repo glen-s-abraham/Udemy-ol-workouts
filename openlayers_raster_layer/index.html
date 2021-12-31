@@ -10,12 +10,21 @@
     <div class = "grid-Container">
       <div class = "grid-1">
         <div class="sidebar">
-          <h2>Base Layers</h2>
-          <input type="radio" name="baseLayerRadiobtn" value = "osm"  checked>OSM map<br>
-          <!--<input type="radio" name="baseLayerRadiobtn" value = "bing"  >Bing Maps<br>-->
-          <input type="radio" name="baseLayerRadiobtn" value = "cartodb" >Carto Map<br>
-          <input type="radio" name="baseLayerRadiobtn" value = "stamen" >Stamen Map<br> 
+          <div id="baseLayers">
+            <h2>Base Layers</h2>
+            <input type="radio" name="baseLayerRadiobtn" value = "osm"  checked>OSM map<br>
+            <!--<input type="radio" name="baseLayerRadiobtn" value = "bing"  >Bing Maps<br>-->
+            <input type="radio" name="baseLayerRadiobtn" value = "cartodb" >Carto Map<br>
+            <input type="radio" name="baseLayerRadiobtn" value = "stamen" >Stamen Map<br> 
+          </div>
+          <div id="layers">
+            <h2>Layers</h2>
+            Arcgis<input type="checkbox" name="rasterTilesCb" value="arcgis" checked><br>
+            WMS<input type="checkbox" name="rasterTilesCb" value="wms" checked>
+          </div>
+          
         </div>
+        
       </div>
       <div class="grid-2">
         <div id="map"></div>

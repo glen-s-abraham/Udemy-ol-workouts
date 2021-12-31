@@ -8,12 +8,12 @@ html, body {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 100%;
+  width: 78%;
 }
 
 .grid-Container{
   display: grid;
-  grid-template-columns: 20vh 80vh;
+  grid-template-columns: 20% 80%;
   grid-template-rows: 100vh;
 }
 

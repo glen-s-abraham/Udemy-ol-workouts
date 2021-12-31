@@ -62,20 +62,24 @@ const arcGisLayer = new TileLayer({
         source:new TileArcGis({
           url:'http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer'
         }),
-        visible:true
+        visible:true,
+        title:'arcgis'
       });   
 
 const wmsLayer =  new TileLayer({
         source: new TileWms({
           //https://nowcoast.noaa.gov/
           url:'https://nowcoast.noaa.gov/arcgis/services/nowcoast/analysis_meteohydro_sfc_qpe_time/MapServer/WMSServer',
+  
           params:{
             //Imagery name identifier
             LAYERS:1,
             FORMAT:'image/png',
             TRANSPARENT:true
-          }
-        })
+          },
+        }),
+        title:'wms',
+        visible:true
       });
 
 
@@ -86,15 +90,6 @@ const baseMapLayers = new LayerGroup({layers:[
   stamenLayer
 ]});
 
-//Layer Switcher logic
-document.querySelector('.sidebar').addEventListener('change',(e)=>{
-  const selectedLayer = e.target.value;
-  baseMapLayers.getLayers().forEach(el=>{
-      el.setVisible(el.get('title')===selectedLayer);
-   
-  })
-  
-});
 const dataLayers = new LayerGroup({
   layers:[
     arcGisLayer,
@@ -103,8 +98,30 @@ const dataLayers = new LayerGroup({
 })
 
 
+//Layer Switcher logic
+document.querySelector('#baseLayers').addEventListener('change',(e)=>{
+  const selectedLayer = e.target.value;
+  baseMapLayers.getLayers().forEach(el=>{
+      el.setVisible(el.get('title')===selectedLayer);   
+  })
+});
+
+document.querySelector('#layers').addEventListener('change',(e)=>{
+  const selectedLayer = e.target.value;
+  const isSelected = e.target.checked;
+  dataLayers.getLayers().forEach(el=>{
+    if(el.get('title')==selectedLayer){
+      console.log(el.get('title'));
+      el.setVisible(isSelected);
+    }
+  })
+});
+
+
+
+
 map.addLayer(baseMapLayers);
-//map.addLayer(dataLayers);
+map.addLayer(dataLayers);
 
 map.on('click',(e)=>{
   console.log(e.coordinate);
