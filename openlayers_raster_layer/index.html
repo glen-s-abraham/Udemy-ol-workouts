@@ -7,7 +7,21 @@
     <title>Using OpenLayers with Vite</title>
   </head>
   <body>
-    <div id="map"></div>
+    <div class = "grid-Container">
+      <div class = "grid-1">
+        <div class="sidebar">
+          <h2>Base Layers</h2>
+          <input type="radio" name="baseLayerRadiobtn" value = "osm"  checked>OSM map<br>
+          <!--<input type="radio" name="baseLayerRadiobtn" value = "bing"  >Bing Maps<br>-->
+          <input type="radio" name="baseLayerRadiobtn" value = "cartodb" >Carto Map<br>
+          <input type="radio" name="baseLayerRadiobtn" value = "stamen" >Stamen Map<br> 
+        </div>
+      </div>
+      <div class="grid-2">
+        <div id="map"></div>
+      </div>
+    </div>
+    
     <script type="module" src="./main.js"></script>
   </body>
 </html>

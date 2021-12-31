@@ -10,3 +10,13 @@ html, body {
   bottom: 0;
   width: 100%;
 }
+
+.grid-Container{
+  display: grid;
+  grid-template-columns: 20vh 80vh;
+  grid-template-rows: 100vh;
+}
+
+.sidebar{
+  margin-left: 15px;
+}
