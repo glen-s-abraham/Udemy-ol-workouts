@@ -1,5 +1,5 @@
 import './style.css';
-import {Map, View} from 'ol';
+import {Map, Overlay, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import VectorTile from 'ol/source/VectorTile';
@@ -55,6 +55,7 @@ const keralaStatesVectroImageLayer = new VectorImageLayer({
   })
 });
 
+
 //Heatmap - subclass of Vector Layers-used to illustrate weight or intensity at a particular point for a feature
 const heatmapFbUsersLayer = new HeatMap({
   source:new VectorSource({
@@ -66,6 +67,39 @@ const heatmapFbUsersLayer = new HeatMap({
   gradient:['#00f','#dc143c','#000','#000','#000']
 })
 
+//Central european countries vector layer
+const centralEuVectorLayer = new VectorImageLayer({
+  source:new VectorSource({
+    url:'./data/vector/Central_EU_countries_GEOJSON.geojson',
+    format:new GeoJSON()
+  }),
+  title:'central-eu-countries'
+})
+
+//Interaction with vector features european countries vector layer
+//obtain pixels at a click point on the map click event
+//use method forEachFeatureAtPixel to identify the features.
+
+//Overlay for eu country informations
+const overlayForEUCountriesLayer = new Overlay({
+  element:document.getElementById('country-info')
+})
+
+//Country Info update logic
+map.on('click',(e)=>{
+  map.removeOverlay(overlayForEUCountriesLayer);
+  map.forEachFeatureAtPixel(e.pixel, (feature,layer)=>{
+    map.addOverlay(overlayForEUCountriesLayer);
+    document.getElementById('name').innerHTML=feature.get('name');
+    document.getElementById('additional-info').innerHTML=feature.get('additionalinfo');
+    overlayForEUCountriesLayer.setPosition(e.coordinate);
+  },{
+    layerFilter:layers=>{
+      return layers.get('title')=='central-eu-countries';
+    }
+  })
+})
+
 //Base Rastor Layers
 const baseRasterLayer = new LayerGroup({layers:[
   osmRasterMapLayer
@@ -73,10 +107,11 @@ const baseRasterLayer = new LayerGroup({layers:[
 
 //Base Vector layers
 const baseVectorLayer = new LayerGroup({layers:[
-    osmVetorTileLayer,
-    keralaStatesVectroLayer,
-    keralaStatesVectroImageLayer,
-    heatmapFbUsersLayer
+    //osmVetorTileLayer,
+    //keralaStatesVectroLayer,
+    //keralaStatesVectroImageLayer,
+    //heatmapFbUsersLayer,
+    centralEuVectorLayer
 ]})
 
 map.addLayer(baseRasterLayer);
